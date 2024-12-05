@@ -1,0 +1,165 @@
+---
+title: "Stats 506 PS6"
+author: "Alyssa Yang"
+format: html
+---
+
+**Github repo link**: https://github.com/alyssawyang/stats506ps6.git
+
+# Stratified Bootstrapping
+## a
+```{r}
+#| code-fold: true
+library(DBI)
+library(RSQLite)
+library(dplyr)
+library(parallel)
+library(future)
+
+# Connect to database
+lahman <- dbConnect(SQLite(), "lahman_1871-2022.sqlite")
+
+# Shortcut for queries
+gg <- function(query) {
+  dbGetQuery(lahman, query)
+}
+```
+
+```{r}
+# Extract Fielding table
+fielding <- gg("SELECT * FROM Fielding")
+
+# Filter fielding table
+fielding <- fielding %>%
+  filter(!is.na(PO), !is.na(A), !is.na(InnOuts), InnOuts > 0)
+```
+
+```{r}
+# Calculate RF
+fielding$rf <- 3 * ((fielding$PO + fielding$A) / fielding$InnOuts)
+
+# Calculate average RF per team
+avg_rf_team <- fielding %>% 
+  group_by(teamID) %>% 
+  summarise(avg_rf = mean(rf, na.rm = TRUE))
+
+avg_rf_team
+```
+
+### 1: Without parallel processing
+```{r}
+#' Non parallel processing bootstrap
+#'
+#' @param data: data table to work on
+#' @param n_samples: number of bootstrap samples
+#'
+#' @return list of bootstrapped average rf values
+boot <- function(data, n_samples) {
+  boot_samples <- vector("list", n_samples)
+  
+  for(i in seq_len(n_samples)) {
+    sampled_data <- data %>%
+      group_by_at("teamID") %>%
+      sample_frac(replace = TRUE) %>% 
+      ungroup()
+    
+    rf <- sampled_data %>% 
+      group_by(teamID) %>% 
+      summarise(avg_rf = mean(rf, na.rm = TRUE))
+    
+    boot_samples[[i]] <- rf
+  }
+  
+  bind_rows(boot_samples)
+}
+
+# Find bootstrap results of average rf
+boot_results <- boot(fielding, 1000)
+
+# Find SDs for the results
+no_parallel_sd <- boot_results %>% 
+  group_by(teamID) %>% 
+  summarise(sd_rf = sd(avg_rf, na.rm = TRUE))
+
+# Combine average and SD into a table
+table <- avg_rf_team %>% 
+  left_join(no_parallel_sd, by = "teamID")
+
+table
+```
+
+### 2: Parallel processing
+```{r}
+#' One bootstrap iteration
+#'
+#' @param data: data table to work on 
+#'
+#' @return one bootstrap sample of average rf
+boot_iter <- function(data) {
+  sampled_data <- data %>% 
+    group_by_at("teamID") %>%
+      sample_frac(replace = TRUE) %>% 
+      summarise(avg_rf = mean(rf, na.rm = TRUE))
+}
+
+#' Bootstrap using parallel processing
+#'
+#' @param data: data table to work on
+#' @param n_samples: number of bootstrap samples 
+#'
+#' @return list of bootstrapped average rf values
+
+parallel_boot <- function(data, n_samples) {
+  # Use all cores but one
+  n_cores <- detectCores() - 1
+  cl <- makeCluster(n_cores)
+  
+  clusterExport(cl, c("data", "boot_iter"), envir = environment())
+  clusterEvalQ(cl, library(dplyr))
+  
+  boot_samples <- parLapply(cl, 1:n_samples, function(i) boot_iter(data))
+  
+  stopCluster(cl)
+  
+  bind_rows(boot_samples)
+}
+
+# Find bootstrap results of average rf
+boot_results <- parallel_boot(fielding, 1000)
+
+# Find SDs for the results
+parallel_sd <- boot_results %>% 
+  group_by(teamID) %>% 
+  summarise(sd_rf = sd(avg_rf, na.rm = TRUE))
+
+# Combine average and SD into a table
+table <- avg_rf_team %>% 
+  left_join(parallel_sd, by = "teamID")
+
+table
+```
+
+### 3: Futures
+```{r}
+plan(multisession)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
