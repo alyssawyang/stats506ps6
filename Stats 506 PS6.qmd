@@ -18,7 +18,7 @@ library(future)
 library(furrr)
 library(tidyr)
 library(gt)
-library(kableExtra)
+library(knitr)
 
 # Connect to database
 lahman <- dbConnect(SQLite(), "lahman_1871-2022.sqlite")
@@ -47,7 +47,8 @@ avg_rf_team <- fielding %>%
   group_by(teamID) %>% 
   summarise(avg_rf = mean(rf, na.rm = TRUE))
 
-avg_rf_team
+# Render the tibble as an HTML table
+kable(avg_rf_team, format = "html")
 ```
 
 ### 1: Without parallel processing
@@ -78,7 +79,9 @@ boot <- function(data, n_samples) {
 }
 
 # Find bootstrap results of average rf
+start_no_parallel <- Sys.time()
 boot_results <- boot(fielding, 1000)
+end_no_parallel <- Sys.time()
 
 # Find SDs for the results
 no_parallel_sd <- boot_results %>% 
@@ -89,7 +92,8 @@ no_parallel_sd <- boot_results %>%
 table <- avg_rf_team %>% 
   left_join(no_parallel_sd, by = "teamID")
 
-table
+# Render the tibble as an HTML table
+kable(table, format = "html")
 ```
 
 ### 2: Parallel processing
@@ -131,7 +135,9 @@ parallel_boot <- function(data, n_samples) {
 }
 
 # Find bootstrap results of average rf
+start_parallel <- Sys.time()
 boot_results <- parallel_boot(fielding, 1000)
+end_parallel <- Sys.time()
 
 # Find SDs for the results
 parallel_sd <- boot_results %>% 
@@ -142,14 +148,17 @@ parallel_sd <- boot_results %>%
 table_parallel <- avg_rf_team %>% 
   left_join(parallel_sd, by = "teamID")
 
-table_parallel
+# Render the tibble as an HTML table
+kable(table_parallel, format = "html")
 ```
 
 ### 3: Futures
 ```{r}
 plan(multisession)
 
+start_future <- Sys.time()
 boot_results <- future_map_dfr(1:1000, ~ boot_iter(fielding), .options = furrr_options(seed = TRUE))
+end_future <- Sys.time()
 
 future_sd <- boot_results %>%
   group_by(teamID) %>%
@@ -158,7 +167,8 @@ future_sd <- boot_results %>%
 table_future <- avg_rf_team %>%
   left_join(future_sd, by = "teamID")
 
-table_future
+# Render the tibble as an HTML table
+kable(table_future, format = "html")
 ```
 
 
@@ -193,13 +203,28 @@ wide_table <- top_teams %>%
     names_sep = " "
   )
 
-wide_table
+# Render the tibble as an HTML table
+kable(wide_table, format = "html", table.attr = "style='width:100%;'")
 ```
 
 
+## c
+```{r}
+# Find timings for each method
+duration_no_parallel <- end_no_parallel - start_no_parallel
+duration_parallel <- end_parallel - start_parallel
+duration_futures <- end_future - start_future
 
+# Put all times into a table
+timings <- tibble(
+  Method = c("No Parallel", "Parallel", "Futures"),
+  Duration = c(duration_no_parallel, duration_parallel, duration_futures)
+)
+# Render the tibble as an HTML table
+kable(timings, format = "html")
+```
 
-
+Based on the timings for each method, we can see that stratified bootstrapping with no parallel processing was the slowest method by far, and parallel processing using the parallel and future packages were much faster by more than three times, with both times being pretty similar. All three methods produced very similar standard errors for all teams so there is little performance difference between them - they produce the same results but using parallelization in the two methods significantly reduces evaluation time.
 
 
 

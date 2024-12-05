@@ -136,14 +136,15 @@ Attaching package: 'dplyr'</code></pre>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(furrr)</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gt)</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Connect to database</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>lahman <span class="ot">&lt;-</span> <span class="fu">dbConnect</span>(<span class="fu">SQLite</span>(), <span class="st">"lahman_1871-2022.sqlite"</span>)</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Shortcut for queries</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>gg <span class="ot">&lt;-</span> <span class="cf">function</span>(query) {</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dbGetQuery</span>(lahman, query)</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Connect to database</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>lahman <span class="ot">&lt;-</span> <span class="fu">dbConnect</span>(<span class="fu">SQLite</span>(), <span class="st">"lahman_1871-2022.sqlite"</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Shortcut for queries</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>gg <span class="ot">&lt;-</span> <span class="cf">function</span>(query) {</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dbGetQuery</span>(lahman, query)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell">
@@ -163,182 +164,2847 @@ Attaching package: 'dplyr'</code></pre>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(teamID) <span class="sc">%&gt;%</span> </span>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg_rf =</span> <span class="fu">mean</span>(rf, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>avg_rf_team</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 140 × 2
-   teamID avg_rf
-   &lt;chr&gt;   &lt;dbl&gt;
- 1 ALT     0.387
- 2 ANA     0.415
- 3 ARI     0.366
- 4 ATL     0.388
- 5 BAL     0.393
- 6 BFN     0.451
- 7 BFP     0.464
- 8 BL1     0.442
- 9 BL2     0.401
-10 BL3     0.444
-# ℹ 130 more rows</code></pre>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Render the tibble as an HTML table</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(avg_rf_team, <span class="at">format =</span> <span class="st">"html"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">teamID</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">avg_rf</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">ALT</td>
+<td style="text-align: right;">0.3865144</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ANA</td>
+<td style="text-align: right;">0.4148563</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ARI</td>
+<td style="text-align: right;">0.3660875</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ATL</td>
+<td style="text-align: right;">0.3882441</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BAL</td>
+<td style="text-align: right;">0.3925106</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BFN</td>
+<td style="text-align: right;">0.4511454</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BFP</td>
+<td style="text-align: right;">0.4636821</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BL1</td>
+<td style="text-align: right;">0.4415901</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BL2</td>
+<td style="text-align: right;">0.4013246</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BL3</td>
+<td style="text-align: right;">0.4444647</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BL4</td>
+<td style="text-align: right;">0.4291347</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BLA</td>
+<td style="text-align: right;">0.4948384</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BLN</td>
+<td style="text-align: right;">0.4494899</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BLU</td>
+<td style="text-align: right;">0.3840402</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BOS</td>
+<td style="text-align: right;">0.4019417</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BR1</td>
+<td style="text-align: right;">0.4380546</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BR2</td>
+<td style="text-align: right;">0.3999913</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BR3</td>
+<td style="text-align: right;">0.4478143</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BR4</td>
+<td style="text-align: right;">0.4389601</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BRO</td>
+<td style="text-align: right;">0.4426533</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BRP</td>
+<td style="text-align: right;">0.4340067</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BS1</td>
+<td style="text-align: right;">0.4524744</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BS2</td>
+<td style="text-align: right;">0.4333522</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BSN</td>
+<td style="text-align: right;">0.4560588</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BSP</td>
+<td style="text-align: right;">0.4312735</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BSU</td>
+<td style="text-align: right;">0.4196739</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CAL</td>
+<td style="text-align: right;">0.4163244</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CH1</td>
+<td style="text-align: right;">0.4295987</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CH2</td>
+<td style="text-align: right;">0.4381417</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CHA</td>
+<td style="text-align: right;">0.4061497</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CHN</td>
+<td style="text-align: right;">0.4151112</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CHP</td>
+<td style="text-align: right;">0.4763870</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CHU</td>
+<td style="text-align: right;">0.3431195</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CIN</td>
+<td style="text-align: right;">0.4033202</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CL1</td>
+<td style="text-align: right;">0.3845966</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CL2</td>
+<td style="text-align: right;">0.4352382</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CL3</td>
+<td style="text-align: right;">0.4592843</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CL4</td>
+<td style="text-align: right;">0.4449912</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CL5</td>
+<td style="text-align: right;">0.4396178</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CL6</td>
+<td style="text-align: right;">0.4108050</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CLE</td>
+<td style="text-align: right;">0.4006011</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CLP</td>
+<td style="text-align: right;">0.4053915</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CN1</td>
+<td style="text-align: right;">0.4408623</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CN2</td>
+<td style="text-align: right;">0.4383911</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CN3</td>
+<td style="text-align: right;">0.4356297</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CNU</td>
+<td style="text-align: right;">0.4442438</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">COL</td>
+<td style="text-align: right;">0.3894685</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">DET</td>
+<td style="text-align: right;">0.4068709</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">DTN</td>
+<td style="text-align: right;">0.4218753</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ELI</td>
+<td style="text-align: right;">0.5265842</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">FLO</td>
+<td style="text-align: right;">0.3704714</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">FW1</td>
+<td style="text-align: right;">0.4400858</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">HAR</td>
+<td style="text-align: right;">0.4180851</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">HOU</td>
+<td style="text-align: right;">0.4014140</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">HR1</td>
+<td style="text-align: right;">0.3834706</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">IN1</td>
+<td style="text-align: right;">0.4081043</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">IN2</td>
+<td style="text-align: right;">0.4626796</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">IN3</td>
+<td style="text-align: right;">0.4194214</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">KC1</td>
+<td style="text-align: right;">0.4076348</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">KC2</td>
+<td style="text-align: right;">0.3811199</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">KCA</td>
+<td style="text-align: right;">0.3908347</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">KCN</td>
+<td style="text-align: right;">0.4401166</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">KCU</td>
+<td style="text-align: right;">0.4177302</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">KEO</td>
+<td style="text-align: right;">0.5121290</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">LAA</td>
+<td style="text-align: right;">0.3760600</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">LAN</td>
+<td style="text-align: right;">0.3951006</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">LS1</td>
+<td style="text-align: right;">0.5301629</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">LS2</td>
+<td style="text-align: right;">0.4729020</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">LS3</td>
+<td style="text-align: right;">0.4891679</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MIA</td>
+<td style="text-align: right;">0.3638393</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MID</td>
+<td style="text-align: right;">0.4584261</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MIL</td>
+<td style="text-align: right;">0.3591028</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MIN</td>
+<td style="text-align: right;">0.3916705</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ML1</td>
+<td style="text-align: right;">0.4412084</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ML2</td>
+<td style="text-align: right;">0.4392629</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ML3</td>
+<td style="text-align: right;">0.4639775</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ML4</td>
+<td style="text-align: right;">0.4141714</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MLA</td>
+<td style="text-align: right;">0.4186572</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MLU</td>
+<td style="text-align: right;">0.5133325</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MON</td>
+<td style="text-align: right;">0.4170258</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NH1</td>
+<td style="text-align: right;">0.4411889</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NY1</td>
+<td style="text-align: right;">0.4400869</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NY2</td>
+<td style="text-align: right;">0.3902632</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NY3</td>
+<td style="text-align: right;">0.3802316</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NY4</td>
+<td style="text-align: right;">0.4421523</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NYA</td>
+<td style="text-align: right;">0.4039777</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NYN</td>
+<td style="text-align: right;">0.4024333</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NYP</td>
+<td style="text-align: right;">0.4219724</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">OAK</td>
+<td style="text-align: right;">0.4031833</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PH1</td>
+<td style="text-align: right;">0.4531390</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PH2</td>
+<td style="text-align: right;">0.4637561</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PH3</td>
+<td style="text-align: right;">0.4662016</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PH4</td>
+<td style="text-align: right;">0.4125432</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PHA</td>
+<td style="text-align: right;">0.4653899</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PHI</td>
+<td style="text-align: right;">0.4009546</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PHN</td>
+<td style="text-align: right;">0.4514996</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PHP</td>
+<td style="text-align: right;">0.4412618</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PHU</td>
+<td style="text-align: right;">0.4805772</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PIT</td>
+<td style="text-align: right;">0.4110421</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PRO</td>
+<td style="text-align: right;">0.4648122</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PT1</td>
+<td style="text-align: right;">0.4425914</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PTP</td>
+<td style="text-align: right;">0.4496719</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">RC1</td>
+<td style="text-align: right;">0.5740314</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">RC2</td>
+<td style="text-align: right;">0.4754104</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">RIC</td>
+<td style="text-align: right;">0.5089137</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SDN</td>
+<td style="text-align: right;">0.3939556</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SE1</td>
+<td style="text-align: right;">0.4176015</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SEA</td>
+<td style="text-align: right;">0.3865966</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SFN</td>
+<td style="text-align: right;">0.4015773</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SL1</td>
+<td style="text-align: right;">0.3374071</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SL2</td>
+<td style="text-align: right;">0.3923114</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SL3</td>
+<td style="text-align: right;">0.3979724</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SL4</td>
+<td style="text-align: right;">0.4362857</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SL5</td>
+<td style="text-align: right;">0.3754091</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SLA</td>
+<td style="text-align: right;">0.4657450</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SLN</td>
+<td style="text-align: right;">0.4197815</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SLU</td>
+<td style="text-align: right;">0.3921405</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SPU</td>
+<td style="text-align: right;">0.4625422</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SR1</td>
+<td style="text-align: right;">0.4648602</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SR2</td>
+<td style="text-align: right;">0.4127012</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">TBA</td>
+<td style="text-align: right;">0.3564751</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">TEX</td>
+<td style="text-align: right;">0.3852728</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">TL1</td>
+<td style="text-align: right;">0.4554015</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">TL2</td>
+<td style="text-align: right;">0.4199668</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">TOR</td>
+<td style="text-align: right;">0.3752141</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">TRN</td>
+<td style="text-align: right;">0.4808805</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">TRO</td>
+<td style="text-align: right;">0.4718956</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">WAS</td>
+<td style="text-align: right;">0.3740593</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">WIL</td>
+<td style="text-align: right;">0.3818743</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">WOR</td>
+<td style="text-align: right;">0.4245581</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">WS1</td>
+<td style="text-align: right;">0.4635646</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">WS2</td>
+<td style="text-align: right;">0.3989311</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">WS3</td>
+<td style="text-align: right;">0.4101920</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">WS4</td>
+<td style="text-align: right;">0.4651933</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">WS5</td>
+<td style="text-align: right;">0.4083095</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">WS6</td>
+<td style="text-align: right;">0.4159025</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">WS7</td>
+<td style="text-align: right;">0.4496808</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">WS8</td>
+<td style="text-align: right;">0.4471758</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">WS9</td>
+<td style="text-align: right;">0.4393495</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">WSU</td>
+<td style="text-align: right;">0.4006772</td>
+</tr>
+</tbody>
+</table>
+
+
 </div>
 </div>
 <section id="without-parallel-processing" class="level3">
 <h3 class="anchored" data-anchor-id="without-parallel-processing">1: Without parallel processing</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Non parallel processing bootstrap</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param data: data table to work on</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param n_samples: number of bootstrap samples</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">#' @return list of bootstrapped average rf values</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>boot <span class="ot">&lt;-</span> <span class="cf">function</span>(data, n_samples) {</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  boot_samples <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">"list"</span>, n_samples)</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="fu">seq_len</span>(n_samples)) {</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    sampled_data <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>      <span class="fu">group_by_at</span>(<span class="st">"teamID"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>      <span class="fu">sample_frac</span>(<span class="at">replace =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>      <span class="fu">ungroup</span>()</span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    rf <span class="ot">&lt;-</span> sampled_data <span class="sc">%&gt;%</span> </span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>      <span class="fu">group_by</span>(teamID) <span class="sc">%&gt;%</span> </span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>      <span class="fu">summarise</span>(<span class="at">avg_rf =</span> <span class="fu">mean</span>(rf, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>    boot_samples[[i]] <span class="ot">&lt;-</span> rf</span>
-<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(boot_samples)</span>
-<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Find bootstrap results of average rf</span></span>
-<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>boot_results <span class="ot">&lt;-</span> <span class="fu">boot</span>(fielding, <span class="dv">1000</span>)</span>
-<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Find SDs for the results</span></span>
-<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>no_parallel_sd <span class="ot">&lt;-</span> boot_results <span class="sc">%&gt;%</span> </span>
-<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(teamID) <span class="sc">%&gt;%</span> </span>
-<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">sd_rf =</span> <span class="fu">sd</span>(avg_rf, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine average and SD into a table</span></span>
-<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>table <span class="ot">&lt;-</span> avg_rf_team <span class="sc">%&gt;%</span> </span>
-<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(no_parallel_sd, <span class="at">by =</span> <span class="st">"teamID"</span>)</span>
-<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a>table</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 140 × 3
-   teamID avg_rf   sd_rf
-   &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt;
- 1 ALT     0.387 0.0500 
- 2 ANA     0.415 0.0153 
- 3 ARI     0.366 0.00850
- 4 ATL     0.388 0.00609
- 5 BAL     0.393 0.00548
- 6 BFN     0.451 0.0210 
- 7 BFP     0.464 0.0525 
- 8 BL1     0.442 0.0286 
- 9 BL2     0.401 0.0155 
-10 BL3     0.444 0.0405 
-# ℹ 130 more rows</code></pre>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Non parallel processing bootstrap</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param data: data table to work on</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param n_samples: number of bootstrap samples</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">#' @return list of bootstrapped average rf values</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>boot <span class="ot">&lt;-</span> <span class="cf">function</span>(data, n_samples) {</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  boot_samples <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">"list"</span>, n_samples)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="fu">seq_len</span>(n_samples)) {</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    sampled_data <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>      <span class="fu">group_by_at</span>(<span class="st">"teamID"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>      <span class="fu">sample_frac</span>(<span class="at">replace =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>      <span class="fu">ungroup</span>()</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    rf <span class="ot">&lt;-</span> sampled_data <span class="sc">%&gt;%</span> </span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>      <span class="fu">group_by</span>(teamID) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>      <span class="fu">summarise</span>(<span class="at">avg_rf =</span> <span class="fu">mean</span>(rf, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    boot_samples[[i]] <span class="ot">&lt;-</span> rf</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(boot_samples)</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Find bootstrap results of average rf</span></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>start_no_parallel <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>boot_results <span class="ot">&lt;-</span> <span class="fu">boot</span>(fielding, <span class="dv">1000</span>)</span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>end_no_parallel <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Find SDs for the results</span></span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>no_parallel_sd <span class="ot">&lt;-</span> boot_results <span class="sc">%&gt;%</span> </span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(teamID) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">sd_rf =</span> <span class="fu">sd</span>(avg_rf, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine average and SD into a table</span></span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>table <span class="ot">&lt;-</span> avg_rf_team <span class="sc">%&gt;%</span> </span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(no_parallel_sd, <span class="at">by =</span> <span class="st">"teamID"</span>)</span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a><span class="co"># Render the tibble as an HTML table</span></span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(table, <span class="at">format =</span> <span class="st">"html"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">teamID</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">avg_rf</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">sd_rf</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">ALT</td>
+<td style="text-align: right;">0.3865144</td>
+<td style="text-align: right;">0.0511411</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ANA</td>
+<td style="text-align: right;">0.4148563</td>
+<td style="text-align: right;">0.0158506</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ARI</td>
+<td style="text-align: right;">0.3660875</td>
+<td style="text-align: right;">0.0089805</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ATL</td>
+<td style="text-align: right;">0.3882441</td>
+<td style="text-align: right;">0.0062189</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BAL</td>
+<td style="text-align: right;">0.3925106</td>
+<td style="text-align: right;">0.0053754</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BFN</td>
+<td style="text-align: right;">0.4511454</td>
+<td style="text-align: right;">0.0214957</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BFP</td>
+<td style="text-align: right;">0.4636821</td>
+<td style="text-align: right;">0.0527375</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BL1</td>
+<td style="text-align: right;">0.4415901</td>
+<td style="text-align: right;">0.0294502</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BL2</td>
+<td style="text-align: right;">0.4013246</td>
+<td style="text-align: right;">0.0153025</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BL3</td>
+<td style="text-align: right;">0.4444647</td>
+<td style="text-align: right;">0.0398188</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BL4</td>
+<td style="text-align: right;">0.4291347</td>
+<td style="text-align: right;">0.0583688</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BLA</td>
+<td style="text-align: right;">0.4948384</td>
+<td style="text-align: right;">0.0316123</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BLN</td>
+<td style="text-align: right;">0.4494899</td>
+<td style="text-align: right;">0.0184666</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BLU</td>
+<td style="text-align: right;">0.3840402</td>
+<td style="text-align: right;">0.0439516</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BOS</td>
+<td style="text-align: right;">0.4019417</td>
+<td style="text-align: right;">0.0053326</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BR1</td>
+<td style="text-align: right;">0.4380546</td>
+<td style="text-align: right;">0.0447454</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BR2</td>
+<td style="text-align: right;">0.3999913</td>
+<td style="text-align: right;">0.0255755</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BR3</td>
+<td style="text-align: right;">0.4478143</td>
+<td style="text-align: right;">0.0224529</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BR4</td>
+<td style="text-align: right;">0.4389601</td>
+<td style="text-align: right;">0.0478588</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BRO</td>
+<td style="text-align: right;">0.4426533</td>
+<td style="text-align: right;">0.0104585</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BRP</td>
+<td style="text-align: right;">0.4340067</td>
+<td style="text-align: right;">0.0559880</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BS1</td>
+<td style="text-align: right;">0.4524744</td>
+<td style="text-align: right;">0.0330211</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BS2</td>
+<td style="text-align: right;">0.4333522</td>
+<td style="text-align: right;">0.0491980</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BSN</td>
+<td style="text-align: right;">0.4560588</td>
+<td style="text-align: right;">0.0087276</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BSP</td>
+<td style="text-align: right;">0.4312735</td>
+<td style="text-align: right;">0.0486340</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BSU</td>
+<td style="text-align: right;">0.4196739</td>
+<td style="text-align: right;">0.0545626</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CAL</td>
+<td style="text-align: right;">0.4163244</td>
+<td style="text-align: right;">0.0082064</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CH1</td>
+<td style="text-align: right;">0.4295987</td>
+<td style="text-align: right;">0.0602286</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CH2</td>
+<td style="text-align: right;">0.4381417</td>
+<td style="text-align: right;">0.0355711</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CHA</td>
+<td style="text-align: right;">0.4061497</td>
+<td style="text-align: right;">0.0053269</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CHN</td>
+<td style="text-align: right;">0.4151112</td>
+<td style="text-align: right;">0.0047819</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CHP</td>
+<td style="text-align: right;">0.4763870</td>
+<td style="text-align: right;">0.0512172</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CHU</td>
+<td style="text-align: right;">0.3431195</td>
+<td style="text-align: right;">0.0377305</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CIN</td>
+<td style="text-align: right;">0.4033202</td>
+<td style="text-align: right;">0.0047316</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CL1</td>
+<td style="text-align: right;">0.3845966</td>
+<td style="text-align: right;">0.0396261</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CL2</td>
+<td style="text-align: right;">0.4352382</td>
+<td style="text-align: right;">0.0232894</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CL3</td>
+<td style="text-align: right;">0.4592843</td>
+<td style="text-align: right;">0.0300949</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CL4</td>
+<td style="text-align: right;">0.4449912</td>
+<td style="text-align: right;">0.0164968</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CL5</td>
+<td style="text-align: right;">0.4396178</td>
+<td style="text-align: right;">0.0446886</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CL6</td>
+<td style="text-align: right;">0.4108050</td>
+<td style="text-align: right;">0.0283106</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CLE</td>
+<td style="text-align: right;">0.4006011</td>
+<td style="text-align: right;">0.0052736</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CLP</td>
+<td style="text-align: right;">0.4053915</td>
+<td style="text-align: right;">0.0444587</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CN1</td>
+<td style="text-align: right;">0.4408623</td>
+<td style="text-align: right;">0.0228954</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CN2</td>
+<td style="text-align: right;">0.4383911</td>
+<td style="text-align: right;">0.0198168</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CN3</td>
+<td style="text-align: right;">0.4356297</td>
+<td style="text-align: right;">0.0515090</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CNU</td>
+<td style="text-align: right;">0.4442438</td>
+<td style="text-align: right;">0.0497450</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">COL</td>
+<td style="text-align: right;">0.3894685</td>
+<td style="text-align: right;">0.0076740</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">DET</td>
+<td style="text-align: right;">0.4068709</td>
+<td style="text-align: right;">0.0050955</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">DTN</td>
+<td style="text-align: right;">0.4218753</td>
+<td style="text-align: right;">0.0166560</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ELI</td>
+<td style="text-align: right;">0.5265842</td>
+<td style="text-align: right;">0.0649465</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">FLO</td>
+<td style="text-align: right;">0.3704714</td>
+<td style="text-align: right;">0.0103063</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">FW1</td>
+<td style="text-align: right;">0.4400858</td>
+<td style="text-align: right;">0.0516213</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">HAR</td>
+<td style="text-align: right;">0.4180851</td>
+<td style="text-align: right;">0.0446481</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">HOU</td>
+<td style="text-align: right;">0.4014140</td>
+<td style="text-align: right;">0.0059622</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">HR1</td>
+<td style="text-align: right;">0.3834706</td>
+<td style="text-align: right;">0.0393984</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">IN1</td>
+<td style="text-align: right;">0.4081043</td>
+<td style="text-align: right;">0.0645352</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">IN2</td>
+<td style="text-align: right;">0.4626796</td>
+<td style="text-align: right;">0.0456612</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">IN3</td>
+<td style="text-align: right;">0.4194214</td>
+<td style="text-align: right;">0.0313605</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">KC1</td>
+<td style="text-align: right;">0.4076348</td>
+<td style="text-align: right;">0.0131575</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">KC2</td>
+<td style="text-align: right;">0.3811199</td>
+<td style="text-align: right;">0.0261985</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">KCA</td>
+<td style="text-align: right;">0.3908347</td>
+<td style="text-align: right;">0.0059393</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">KCN</td>
+<td style="text-align: right;">0.4401166</td>
+<td style="text-align: right;">0.0500953</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">KCU</td>
+<td style="text-align: right;">0.4177302</td>
+<td style="text-align: right;">0.0314516</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">KEO</td>
+<td style="text-align: right;">0.5121290</td>
+<td style="text-align: right;">0.1110072</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">LAA</td>
+<td style="text-align: right;">0.3760600</td>
+<td style="text-align: right;">0.0092668</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">LAN</td>
+<td style="text-align: right;">0.3951006</td>
+<td style="text-align: right;">0.0059041</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">LS1</td>
+<td style="text-align: right;">0.5301629</td>
+<td style="text-align: right;">0.0555665</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">LS2</td>
+<td style="text-align: right;">0.4729020</td>
+<td style="text-align: right;">0.0167402</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">LS3</td>
+<td style="text-align: right;">0.4891679</td>
+<td style="text-align: right;">0.0154255</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MIA</td>
+<td style="text-align: right;">0.3638393</td>
+<td style="text-align: right;">0.0120487</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MID</td>
+<td style="text-align: right;">0.4584261</td>
+<td style="text-align: right;">0.0628410</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MIL</td>
+<td style="text-align: right;">0.3591028</td>
+<td style="text-align: right;">0.0084797</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MIN</td>
+<td style="text-align: right;">0.3916705</td>
+<td style="text-align: right;">0.0056790</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ML1</td>
+<td style="text-align: right;">0.4412084</td>
+<td style="text-align: right;">0.0146961</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ML2</td>
+<td style="text-align: right;">0.4392629</td>
+<td style="text-align: right;">0.0573755</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ML3</td>
+<td style="text-align: right;">0.4639775</td>
+<td style="text-align: right;">0.0641613</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ML4</td>
+<td style="text-align: right;">0.4141714</td>
+<td style="text-align: right;">0.0087885</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MLA</td>
+<td style="text-align: right;">0.4186572</td>
+<td style="text-align: right;">0.0386524</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MLU</td>
+<td style="text-align: right;">0.5133325</td>
+<td style="text-align: right;">0.1263917</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MON</td>
+<td style="text-align: right;">0.4170258</td>
+<td style="text-align: right;">0.0085877</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NH1</td>
+<td style="text-align: right;">0.4411889</td>
+<td style="text-align: right;">0.0504899</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NY1</td>
+<td style="text-align: right;">0.4400869</td>
+<td style="text-align: right;">0.0088461</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NY2</td>
+<td style="text-align: right;">0.3902632</td>
+<td style="text-align: right;">0.0235140</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NY3</td>
+<td style="text-align: right;">0.3802316</td>
+<td style="text-align: right;">0.0389958</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NY4</td>
+<td style="text-align: right;">0.4421523</td>
+<td style="text-align: right;">0.0249218</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NYA</td>
+<td style="text-align: right;">0.4039777</td>
+<td style="text-align: right;">0.0054325</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NYN</td>
+<td style="text-align: right;">0.4024333</td>
+<td style="text-align: right;">0.0056544</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NYP</td>
+<td style="text-align: right;">0.4219724</td>
+<td style="text-align: right;">0.0489707</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">OAK</td>
+<td style="text-align: right;">0.4031833</td>
+<td style="text-align: right;">0.0069801</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PH1</td>
+<td style="text-align: right;">0.4531390</td>
+<td style="text-align: right;">0.0281180</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PH2</td>
+<td style="text-align: right;">0.4637561</td>
+<td style="text-align: right;">0.0326502</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PH3</td>
+<td style="text-align: right;">0.4662016</td>
+<td style="text-align: right;">0.0866479</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PH4</td>
+<td style="text-align: right;">0.4125432</td>
+<td style="text-align: right;">0.0151610</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PHA</td>
+<td style="text-align: right;">0.4653899</td>
+<td style="text-align: right;">0.0175985</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PHI</td>
+<td style="text-align: right;">0.4009546</td>
+<td style="text-align: right;">0.0047461</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PHN</td>
+<td style="text-align: right;">0.4514996</td>
+<td style="text-align: right;">0.0409591</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PHP</td>
+<td style="text-align: right;">0.4412618</td>
+<td style="text-align: right;">0.0599528</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PHU</td>
+<td style="text-align: right;">0.4805772</td>
+<td style="text-align: right;">0.0464772</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PIT</td>
+<td style="text-align: right;">0.4110421</td>
+<td style="text-align: right;">0.0046339</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PRO</td>
+<td style="text-align: right;">0.4648122</td>
+<td style="text-align: right;">0.0225029</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PT1</td>
+<td style="text-align: right;">0.4425914</td>
+<td style="text-align: right;">0.0232781</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PTP</td>
+<td style="text-align: right;">0.4496719</td>
+<td style="text-align: right;">0.0532611</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">RC1</td>
+<td style="text-align: right;">0.5740314</td>
+<td style="text-align: right;">0.0799952</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">RC2</td>
+<td style="text-align: right;">0.4754104</td>
+<td style="text-align: right;">0.0435303</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">RIC</td>
+<td style="text-align: right;">0.5089137</td>
+<td style="text-align: right;">0.0683018</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SDN</td>
+<td style="text-align: right;">0.3939556</td>
+<td style="text-align: right;">0.0058037</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SE1</td>
+<td style="text-align: right;">0.4176015</td>
+<td style="text-align: right;">0.0434335</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SEA</td>
+<td style="text-align: right;">0.3865966</td>
+<td style="text-align: right;">0.0067010</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SFN</td>
+<td style="text-align: right;">0.4015773</td>
+<td style="text-align: right;">0.0053010</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SL1</td>
+<td style="text-align: right;">0.3374071</td>
+<td style="text-align: right;">0.0648669</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SL2</td>
+<td style="text-align: right;">0.3923114</td>
+<td style="text-align: right;">0.0587806</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SL3</td>
+<td style="text-align: right;">0.3979724</td>
+<td style="text-align: right;">0.0415687</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SL4</td>
+<td style="text-align: right;">0.4362857</td>
+<td style="text-align: right;">0.0161179</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SL5</td>
+<td style="text-align: right;">0.3754091</td>
+<td style="text-align: right;">0.0287322</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SLA</td>
+<td style="text-align: right;">0.4657450</td>
+<td style="text-align: right;">0.0168128</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SLN</td>
+<td style="text-align: right;">0.4197815</td>
+<td style="text-align: right;">0.0049928</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SLU</td>
+<td style="text-align: right;">0.3921405</td>
+<td style="text-align: right;">0.0385196</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SPU</td>
+<td style="text-align: right;">0.4625422</td>
+<td style="text-align: right;">0.0907398</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SR1</td>
+<td style="text-align: right;">0.4648602</td>
+<td style="text-align: right;">0.0405147</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SR2</td>
+<td style="text-align: right;">0.4127012</td>
+<td style="text-align: right;">0.0399610</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">TBA</td>
+<td style="text-align: right;">0.3564751</td>
+<td style="text-align: right;">0.0083150</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">TEX</td>
+<td style="text-align: right;">0.3852728</td>
+<td style="text-align: right;">0.0062563</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">TL1</td>
+<td style="text-align: right;">0.4554015</td>
+<td style="text-align: right;">0.0490990</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">TL2</td>
+<td style="text-align: right;">0.4199668</td>
+<td style="text-align: right;">0.0621150</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">TOR</td>
+<td style="text-align: right;">0.3752141</td>
+<td style="text-align: right;">0.0065022</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">TRN</td>
+<td style="text-align: right;">0.4808805</td>
+<td style="text-align: right;">0.0293664</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">TRO</td>
+<td style="text-align: right;">0.4718956</td>
+<td style="text-align: right;">0.0404230</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">WAS</td>
+<td style="text-align: right;">0.3740593</td>
+<td style="text-align: right;">0.0080400</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">WIL</td>
+<td style="text-align: right;">0.3818743</td>
+<td style="text-align: right;">0.0590715</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">WOR</td>
+<td style="text-align: right;">0.4245581</td>
+<td style="text-align: right;">0.0346283</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">WS1</td>
+<td style="text-align: right;">0.4635646</td>
+<td style="text-align: right;">0.0123309</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">WS2</td>
+<td style="text-align: right;">0.3989311</td>
+<td style="text-align: right;">0.0127799</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">WS3</td>
+<td style="text-align: right;">0.4101920</td>
+<td style="text-align: right;">0.0443707</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">WS4</td>
+<td style="text-align: right;">0.4651933</td>
+<td style="text-align: right;">0.0585507</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">WS5</td>
+<td style="text-align: right;">0.4083095</td>
+<td style="text-align: right;">0.0516287</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">WS6</td>
+<td style="text-align: right;">0.4159025</td>
+<td style="text-align: right;">0.0564037</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">WS7</td>
+<td style="text-align: right;">0.4496808</td>
+<td style="text-align: right;">0.0471468</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">WS8</td>
+<td style="text-align: right;">0.4471758</td>
+<td style="text-align: right;">0.0204506</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">WS9</td>
+<td style="text-align: right;">0.4393495</td>
+<td style="text-align: right;">0.0363932</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">WSU</td>
+<td style="text-align: right;">0.4006772</td>
+<td style="text-align: right;">0.0348524</td>
+</tr>
+</tbody>
+</table>
+
+
 </div>
 </div>
 </section>
 <section id="parallel-processing" class="level3">
 <h3 class="anchored" data-anchor-id="parallel-processing">2: Parallel processing</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' One bootstrap iteration</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param data: data table to work on </span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co">#' @return one bootstrap sample of average rf</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>boot_iter <span class="ot">&lt;-</span> <span class="cf">function</span>(data) {</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  sampled_data <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> </span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by_at</span>(<span class="st">"teamID"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">sample_frac</span>(<span class="at">replace =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">summarise</span>(<span class="at">avg_rf =</span> <span class="fu">mean</span>(rf, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' One bootstrap iteration</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param data: data table to work on </span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">#' @return one bootstrap sample of average rf</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>boot_iter <span class="ot">&lt;-</span> <span class="cf">function</span>(data) {</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  sampled_data <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> </span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by_at</span>(<span class="st">"teamID"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">sample_frac</span>(<span class="at">replace =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">summarise</span>(<span class="at">avg_rf =</span> <span class="fu">mean</span>(rf, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Bootstrap using parallel processing</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param data: data table to work on</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param n_samples: number of bootstrap samples </span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co">#' @return list of bootstrapped average rf values</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>parallel_boot <span class="ot">&lt;-</span> <span class="cf">function</span>(data, n_samples) {</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Use all cores but one</span></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  n_cores <span class="ot">&lt;-</span> <span class="fu">detectCores</span>() <span class="sc">-</span> <span class="dv">1</span></span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  cl <span class="ot">&lt;-</span> <span class="fu">makeCluster</span>(n_cores)</span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clusterExport</span>(cl, <span class="fu">c</span>(<span class="st">"data"</span>, <span class="st">"boot_iter"</span>), <span class="at">envir =</span> <span class="fu">environment</span>())</span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clusterEvalQ</span>(cl, <span class="fu">library</span>(dplyr))</span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>  boot_samples <span class="ot">&lt;-</span> <span class="fu">parLapply</span>(cl, <span class="dv">1</span><span class="sc">:</span>n_samples, <span class="cf">function</span>(i) <span class="fu">boot_iter</span>(data))</span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stopCluster</span>(cl)</span>
-<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(boot_samples)</span>
-<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Find bootstrap results of average rf</span></span>
-<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>boot_results <span class="ot">&lt;-</span> <span class="fu">parallel_boot</span>(fielding, <span class="dv">1000</span>)</span>
-<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Find SDs for the results</span></span>
-<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>parallel_sd <span class="ot">&lt;-</span> boot_results <span class="sc">%&gt;%</span> </span>
-<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(teamID) <span class="sc">%&gt;%</span> </span>
-<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">sd_rf =</span> <span class="fu">sd</span>(avg_rf, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine average and SD into a table</span></span>
-<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a>table_parallel <span class="ot">&lt;-</span> avg_rf_team <span class="sc">%&gt;%</span> </span>
-<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(parallel_sd, <span class="at">by =</span> <span class="st">"teamID"</span>)</span>
-<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a>table_parallel</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 140 × 3
-   teamID avg_rf   sd_rf
-   &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt;
- 1 ALT     0.387 0.0512 
- 2 ANA     0.415 0.0151 
- 3 ARI     0.366 0.00854
- 4 ATL     0.388 0.00579
- 5 BAL     0.393 0.00535
- 6 BFN     0.451 0.0215 
- 7 BFP     0.464 0.0543 
- 8 BL1     0.442 0.0289 
- 9 BL2     0.401 0.0166 
-10 BL3     0.444 0.0399 
-# ℹ 130 more rows</code></pre>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Bootstrap using parallel processing</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param data: data table to work on</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param n_samples: number of bootstrap samples </span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co">#' @return list of bootstrapped average rf values</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>parallel_boot <span class="ot">&lt;-</span> <span class="cf">function</span>(data, n_samples) {</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Use all cores but one</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  n_cores <span class="ot">&lt;-</span> <span class="fu">detectCores</span>() <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  cl <span class="ot">&lt;-</span> <span class="fu">makeCluster</span>(n_cores)</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clusterExport</span>(cl, <span class="fu">c</span>(<span class="st">"data"</span>, <span class="st">"boot_iter"</span>), <span class="at">envir =</span> <span class="fu">environment</span>())</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clusterEvalQ</span>(cl, <span class="fu">library</span>(dplyr))</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>  boot_samples <span class="ot">&lt;-</span> <span class="fu">parLapply</span>(cl, <span class="dv">1</span><span class="sc">:</span>n_samples, <span class="cf">function</span>(i) <span class="fu">boot_iter</span>(data))</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stopCluster</span>(cl)</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(boot_samples)</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Find bootstrap results of average rf</span></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>start_parallel <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>boot_results <span class="ot">&lt;-</span> <span class="fu">parallel_boot</span>(fielding, <span class="dv">1000</span>)</span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>end_parallel <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Find SDs for the results</span></span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>parallel_sd <span class="ot">&lt;-</span> boot_results <span class="sc">%&gt;%</span> </span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(teamID) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">sd_rf =</span> <span class="fu">sd</span>(avg_rf, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine average and SD into a table</span></span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>table_parallel <span class="ot">&lt;-</span> avg_rf_team <span class="sc">%&gt;%</span> </span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(parallel_sd, <span class="at">by =</span> <span class="st">"teamID"</span>)</span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Render the tibble as an HTML table</span></span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(table_parallel, <span class="at">format =</span> <span class="st">"html"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">teamID</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">avg_rf</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">sd_rf</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">ALT</td>
+<td style="text-align: right;">0.3865144</td>
+<td style="text-align: right;">0.0499178</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ANA</td>
+<td style="text-align: right;">0.4148563</td>
+<td style="text-align: right;">0.0155595</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ARI</td>
+<td style="text-align: right;">0.3660875</td>
+<td style="text-align: right;">0.0085985</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ATL</td>
+<td style="text-align: right;">0.3882441</td>
+<td style="text-align: right;">0.0059074</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BAL</td>
+<td style="text-align: right;">0.3925106</td>
+<td style="text-align: right;">0.0054460</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BFN</td>
+<td style="text-align: right;">0.4511454</td>
+<td style="text-align: right;">0.0211141</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BFP</td>
+<td style="text-align: right;">0.4636821</td>
+<td style="text-align: right;">0.0510061</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BL1</td>
+<td style="text-align: right;">0.4415901</td>
+<td style="text-align: right;">0.0304881</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BL2</td>
+<td style="text-align: right;">0.4013246</td>
+<td style="text-align: right;">0.0157450</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BL3</td>
+<td style="text-align: right;">0.4444647</td>
+<td style="text-align: right;">0.0404602</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BL4</td>
+<td style="text-align: right;">0.4291347</td>
+<td style="text-align: right;">0.0546838</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BLA</td>
+<td style="text-align: right;">0.4948384</td>
+<td style="text-align: right;">0.0313176</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BLN</td>
+<td style="text-align: right;">0.4494899</td>
+<td style="text-align: right;">0.0186052</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BLU</td>
+<td style="text-align: right;">0.3840402</td>
+<td style="text-align: right;">0.0415436</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BOS</td>
+<td style="text-align: right;">0.4019417</td>
+<td style="text-align: right;">0.0052936</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BR1</td>
+<td style="text-align: right;">0.4380546</td>
+<td style="text-align: right;">0.0433101</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BR2</td>
+<td style="text-align: right;">0.3999913</td>
+<td style="text-align: right;">0.0258567</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BR3</td>
+<td style="text-align: right;">0.4478143</td>
+<td style="text-align: right;">0.0227147</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BR4</td>
+<td style="text-align: right;">0.4389601</td>
+<td style="text-align: right;">0.0457616</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BRO</td>
+<td style="text-align: right;">0.4426533</td>
+<td style="text-align: right;">0.0099652</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BRP</td>
+<td style="text-align: right;">0.4340067</td>
+<td style="text-align: right;">0.0530010</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BS1</td>
+<td style="text-align: right;">0.4524744</td>
+<td style="text-align: right;">0.0309898</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BS2</td>
+<td style="text-align: right;">0.4333522</td>
+<td style="text-align: right;">0.0487376</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BSN</td>
+<td style="text-align: right;">0.4560588</td>
+<td style="text-align: right;">0.0088955</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BSP</td>
+<td style="text-align: right;">0.4312735</td>
+<td style="text-align: right;">0.0480851</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BSU</td>
+<td style="text-align: right;">0.4196739</td>
+<td style="text-align: right;">0.0563167</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CAL</td>
+<td style="text-align: right;">0.4163244</td>
+<td style="text-align: right;">0.0080574</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CH1</td>
+<td style="text-align: right;">0.4295987</td>
+<td style="text-align: right;">0.0586526</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CH2</td>
+<td style="text-align: right;">0.4381417</td>
+<td style="text-align: right;">0.0359323</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CHA</td>
+<td style="text-align: right;">0.4061497</td>
+<td style="text-align: right;">0.0054322</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CHN</td>
+<td style="text-align: right;">0.4151112</td>
+<td style="text-align: right;">0.0046925</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CHP</td>
+<td style="text-align: right;">0.4763870</td>
+<td style="text-align: right;">0.0519276</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CHU</td>
+<td style="text-align: right;">0.3431195</td>
+<td style="text-align: right;">0.0363847</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CIN</td>
+<td style="text-align: right;">0.4033202</td>
+<td style="text-align: right;">0.0048704</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CL1</td>
+<td style="text-align: right;">0.3845966</td>
+<td style="text-align: right;">0.0406050</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CL2</td>
+<td style="text-align: right;">0.4352382</td>
+<td style="text-align: right;">0.0228663</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CL3</td>
+<td style="text-align: right;">0.4592843</td>
+<td style="text-align: right;">0.0294529</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CL4</td>
+<td style="text-align: right;">0.4449912</td>
+<td style="text-align: right;">0.0167570</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CL5</td>
+<td style="text-align: right;">0.4396178</td>
+<td style="text-align: right;">0.0463042</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CL6</td>
+<td style="text-align: right;">0.4108050</td>
+<td style="text-align: right;">0.0280153</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CLE</td>
+<td style="text-align: right;">0.4006011</td>
+<td style="text-align: right;">0.0052121</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CLP</td>
+<td style="text-align: right;">0.4053915</td>
+<td style="text-align: right;">0.0439293</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CN1</td>
+<td style="text-align: right;">0.4408623</td>
+<td style="text-align: right;">0.0232187</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CN2</td>
+<td style="text-align: right;">0.4383911</td>
+<td style="text-align: right;">0.0206463</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CN3</td>
+<td style="text-align: right;">0.4356297</td>
+<td style="text-align: right;">0.0527313</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CNU</td>
+<td style="text-align: right;">0.4442438</td>
+<td style="text-align: right;">0.0523952</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">COL</td>
+<td style="text-align: right;">0.3894685</td>
+<td style="text-align: right;">0.0078365</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">DET</td>
+<td style="text-align: right;">0.4068709</td>
+<td style="text-align: right;">0.0052215</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">DTN</td>
+<td style="text-align: right;">0.4218753</td>
+<td style="text-align: right;">0.0169902</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ELI</td>
+<td style="text-align: right;">0.5265842</td>
+<td style="text-align: right;">0.0632898</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">FLO</td>
+<td style="text-align: right;">0.3704714</td>
+<td style="text-align: right;">0.0101415</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">FW1</td>
+<td style="text-align: right;">0.4400858</td>
+<td style="text-align: right;">0.0510155</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">HAR</td>
+<td style="text-align: right;">0.4180851</td>
+<td style="text-align: right;">0.0452788</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">HOU</td>
+<td style="text-align: right;">0.4014140</td>
+<td style="text-align: right;">0.0063400</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">HR1</td>
+<td style="text-align: right;">0.3834706</td>
+<td style="text-align: right;">0.0372938</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">IN1</td>
+<td style="text-align: right;">0.4081043</td>
+<td style="text-align: right;">0.0652410</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">IN2</td>
+<td style="text-align: right;">0.4626796</td>
+<td style="text-align: right;">0.0462814</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">IN3</td>
+<td style="text-align: right;">0.4194214</td>
+<td style="text-align: right;">0.0300395</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">KC1</td>
+<td style="text-align: right;">0.4076348</td>
+<td style="text-align: right;">0.0122149</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">KC2</td>
+<td style="text-align: right;">0.3811199</td>
+<td style="text-align: right;">0.0260856</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">KCA</td>
+<td style="text-align: right;">0.3908347</td>
+<td style="text-align: right;">0.0061177</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">KCN</td>
+<td style="text-align: right;">0.4401166</td>
+<td style="text-align: right;">0.0494405</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">KCU</td>
+<td style="text-align: right;">0.4177302</td>
+<td style="text-align: right;">0.0311149</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">KEO</td>
+<td style="text-align: right;">0.5121290</td>
+<td style="text-align: right;">0.1124204</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">LAA</td>
+<td style="text-align: right;">0.3760600</td>
+<td style="text-align: right;">0.0093008</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">LAN</td>
+<td style="text-align: right;">0.3951006</td>
+<td style="text-align: right;">0.0056869</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">LS1</td>
+<td style="text-align: right;">0.5301629</td>
+<td style="text-align: right;">0.0546134</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">LS2</td>
+<td style="text-align: right;">0.4729020</td>
+<td style="text-align: right;">0.0165478</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">LS3</td>
+<td style="text-align: right;">0.4891679</td>
+<td style="text-align: right;">0.0157245</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MIA</td>
+<td style="text-align: right;">0.3638393</td>
+<td style="text-align: right;">0.0122423</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MID</td>
+<td style="text-align: right;">0.4584261</td>
+<td style="text-align: right;">0.0627795</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MIL</td>
+<td style="text-align: right;">0.3591028</td>
+<td style="text-align: right;">0.0084116</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MIN</td>
+<td style="text-align: right;">0.3916705</td>
+<td style="text-align: right;">0.0056855</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ML1</td>
+<td style="text-align: right;">0.4412084</td>
+<td style="text-align: right;">0.0148884</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ML2</td>
+<td style="text-align: right;">0.4392629</td>
+<td style="text-align: right;">0.0544867</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ML3</td>
+<td style="text-align: right;">0.4639775</td>
+<td style="text-align: right;">0.0629918</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ML4</td>
+<td style="text-align: right;">0.4141714</td>
+<td style="text-align: right;">0.0087078</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MLA</td>
+<td style="text-align: right;">0.4186572</td>
+<td style="text-align: right;">0.0377595</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MLU</td>
+<td style="text-align: right;">0.5133325</td>
+<td style="text-align: right;">0.1297942</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MON</td>
+<td style="text-align: right;">0.4170258</td>
+<td style="text-align: right;">0.0081382</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NH1</td>
+<td style="text-align: right;">0.4411889</td>
+<td style="text-align: right;">0.0492744</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NY1</td>
+<td style="text-align: right;">0.4400869</td>
+<td style="text-align: right;">0.0092077</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NY2</td>
+<td style="text-align: right;">0.3902632</td>
+<td style="text-align: right;">0.0231565</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NY3</td>
+<td style="text-align: right;">0.3802316</td>
+<td style="text-align: right;">0.0415103</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NY4</td>
+<td style="text-align: right;">0.4421523</td>
+<td style="text-align: right;">0.0241349</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NYA</td>
+<td style="text-align: right;">0.4039777</td>
+<td style="text-align: right;">0.0052555</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NYN</td>
+<td style="text-align: right;">0.4024333</td>
+<td style="text-align: right;">0.0056161</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NYP</td>
+<td style="text-align: right;">0.4219724</td>
+<td style="text-align: right;">0.0475837</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">OAK</td>
+<td style="text-align: right;">0.4031833</td>
+<td style="text-align: right;">0.0067986</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PH1</td>
+<td style="text-align: right;">0.4531390</td>
+<td style="text-align: right;">0.0271881</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PH2</td>
+<td style="text-align: right;">0.4637561</td>
+<td style="text-align: right;">0.0337833</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PH3</td>
+<td style="text-align: right;">0.4662016</td>
+<td style="text-align: right;">0.0848561</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PH4</td>
+<td style="text-align: right;">0.4125432</td>
+<td style="text-align: right;">0.0155144</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PHA</td>
+<td style="text-align: right;">0.4653899</td>
+<td style="text-align: right;">0.0176275</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PHI</td>
+<td style="text-align: right;">0.4009546</td>
+<td style="text-align: right;">0.0048376</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PHN</td>
+<td style="text-align: right;">0.4514996</td>
+<td style="text-align: right;">0.0410059</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PHP</td>
+<td style="text-align: right;">0.4412618</td>
+<td style="text-align: right;">0.0567830</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PHU</td>
+<td style="text-align: right;">0.4805772</td>
+<td style="text-align: right;">0.0455645</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PIT</td>
+<td style="text-align: right;">0.4110421</td>
+<td style="text-align: right;">0.0048772</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PRO</td>
+<td style="text-align: right;">0.4648122</td>
+<td style="text-align: right;">0.0229608</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PT1</td>
+<td style="text-align: right;">0.4425914</td>
+<td style="text-align: right;">0.0234012</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PTP</td>
+<td style="text-align: right;">0.4496719</td>
+<td style="text-align: right;">0.0538812</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">RC1</td>
+<td style="text-align: right;">0.5740314</td>
+<td style="text-align: right;">0.0809002</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">RC2</td>
+<td style="text-align: right;">0.4754104</td>
+<td style="text-align: right;">0.0446889</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">RIC</td>
+<td style="text-align: right;">0.5089137</td>
+<td style="text-align: right;">0.0673524</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SDN</td>
+<td style="text-align: right;">0.3939556</td>
+<td style="text-align: right;">0.0060549</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SE1</td>
+<td style="text-align: right;">0.4176015</td>
+<td style="text-align: right;">0.0467225</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SEA</td>
+<td style="text-align: right;">0.3865966</td>
+<td style="text-align: right;">0.0067720</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SFN</td>
+<td style="text-align: right;">0.4015773</td>
+<td style="text-align: right;">0.0054599</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SL1</td>
+<td style="text-align: right;">0.3374071</td>
+<td style="text-align: right;">0.0665502</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SL2</td>
+<td style="text-align: right;">0.3923114</td>
+<td style="text-align: right;">0.0577866</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SL3</td>
+<td style="text-align: right;">0.3979724</td>
+<td style="text-align: right;">0.0402572</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SL4</td>
+<td style="text-align: right;">0.4362857</td>
+<td style="text-align: right;">0.0167250</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SL5</td>
+<td style="text-align: right;">0.3754091</td>
+<td style="text-align: right;">0.0297418</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SLA</td>
+<td style="text-align: right;">0.4657450</td>
+<td style="text-align: right;">0.0172410</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SLN</td>
+<td style="text-align: right;">0.4197815</td>
+<td style="text-align: right;">0.0049134</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SLU</td>
+<td style="text-align: right;">0.3921405</td>
+<td style="text-align: right;">0.0387285</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SPU</td>
+<td style="text-align: right;">0.4625422</td>
+<td style="text-align: right;">0.0910837</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SR1</td>
+<td style="text-align: right;">0.4648602</td>
+<td style="text-align: right;">0.0385336</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SR2</td>
+<td style="text-align: right;">0.4127012</td>
+<td style="text-align: right;">0.0400639</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">TBA</td>
+<td style="text-align: right;">0.3564751</td>
+<td style="text-align: right;">0.0079335</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">TEX</td>
+<td style="text-align: right;">0.3852728</td>
+<td style="text-align: right;">0.0062559</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">TL1</td>
+<td style="text-align: right;">0.4554015</td>
+<td style="text-align: right;">0.0489225</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">TL2</td>
+<td style="text-align: right;">0.4199668</td>
+<td style="text-align: right;">0.0610264</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">TOR</td>
+<td style="text-align: right;">0.3752141</td>
+<td style="text-align: right;">0.0064881</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">TRN</td>
+<td style="text-align: right;">0.4808805</td>
+<td style="text-align: right;">0.0324159</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">TRO</td>
+<td style="text-align: right;">0.4718956</td>
+<td style="text-align: right;">0.0430200</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">WAS</td>
+<td style="text-align: right;">0.3740593</td>
+<td style="text-align: right;">0.0079513</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">WIL</td>
+<td style="text-align: right;">0.3818743</td>
+<td style="text-align: right;">0.0621754</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">WOR</td>
+<td style="text-align: right;">0.4245581</td>
+<td style="text-align: right;">0.0352491</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">WS1</td>
+<td style="text-align: right;">0.4635646</td>
+<td style="text-align: right;">0.0121345</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">WS2</td>
+<td style="text-align: right;">0.3989311</td>
+<td style="text-align: right;">0.0126011</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">WS3</td>
+<td style="text-align: right;">0.4101920</td>
+<td style="text-align: right;">0.0463755</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">WS4</td>
+<td style="text-align: right;">0.4651933</td>
+<td style="text-align: right;">0.0600792</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">WS5</td>
+<td style="text-align: right;">0.4083095</td>
+<td style="text-align: right;">0.0519721</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">WS6</td>
+<td style="text-align: right;">0.4159025</td>
+<td style="text-align: right;">0.0558966</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">WS7</td>
+<td style="text-align: right;">0.4496808</td>
+<td style="text-align: right;">0.0510248</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">WS8</td>
+<td style="text-align: right;">0.4471758</td>
+<td style="text-align: right;">0.0218734</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">WS9</td>
+<td style="text-align: right;">0.4393495</td>
+<td style="text-align: right;">0.0365310</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">WSU</td>
+<td style="text-align: right;">0.4006772</td>
+<td style="text-align: right;">0.0343179</td>
+</tr>
+</tbody>
+</table>
+
+
 </div>
 </div>
 </section>
 <section id="futures" class="level3">
 <h3 class="anchored" data-anchor-id="futures">3: Futures</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plan</span>(multisession)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>boot_results <span class="ot">&lt;-</span> <span class="fu">future_map_dfr</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>, <span class="sc">~</span> <span class="fu">boot_iter</span>(fielding), <span class="at">.options =</span> <span class="fu">furrr_options</span>(<span class="at">seed =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>future_sd <span class="ot">&lt;-</span> boot_results <span class="sc">%&gt;%</span></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(teamID) <span class="sc">%&gt;%</span></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">sd_rf =</span> <span class="fu">sd</span>(avg_rf, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>table_future <span class="ot">&lt;-</span> avg_rf_team <span class="sc">%&gt;%</span></span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(future_sd, <span class="at">by =</span> <span class="st">"teamID"</span>)</span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>table_future</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 140 × 3
-   teamID avg_rf   sd_rf
-   &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt;
- 1 ALT     0.387 0.0521 
- 2 ANA     0.415 0.0161 
- 3 ARI     0.366 0.00883
- 4 ATL     0.388 0.00610
- 5 BAL     0.393 0.00548
- 6 BFN     0.451 0.0211 
- 7 BFP     0.464 0.0526 
- 8 BL1     0.442 0.0283 
- 9 BL2     0.401 0.0154 
-10 BL3     0.444 0.0394 
-# ℹ 130 more rows</code></pre>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plan</span>(multisession)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>start_future <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>boot_results <span class="ot">&lt;-</span> <span class="fu">future_map_dfr</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>, <span class="sc">~</span> <span class="fu">boot_iter</span>(fielding), <span class="at">.options =</span> <span class="fu">furrr_options</span>(<span class="at">seed =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>end_future <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>future_sd <span class="ot">&lt;-</span> boot_results <span class="sc">%&gt;%</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(teamID) <span class="sc">%&gt;%</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">sd_rf =</span> <span class="fu">sd</span>(avg_rf, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>table_future <span class="ot">&lt;-</span> avg_rf_team <span class="sc">%&gt;%</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(future_sd, <span class="at">by =</span> <span class="st">"teamID"</span>)</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Render the tibble as an HTML table</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(table_future, <span class="at">format =</span> <span class="st">"html"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">teamID</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">avg_rf</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">sd_rf</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">ALT</td>
+<td style="text-align: right;">0.3865144</td>
+<td style="text-align: right;">0.0494096</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ANA</td>
+<td style="text-align: right;">0.4148563</td>
+<td style="text-align: right;">0.0152922</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ARI</td>
+<td style="text-align: right;">0.3660875</td>
+<td style="text-align: right;">0.0084100</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ATL</td>
+<td style="text-align: right;">0.3882441</td>
+<td style="text-align: right;">0.0058690</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BAL</td>
+<td style="text-align: right;">0.3925106</td>
+<td style="text-align: right;">0.0055221</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BFN</td>
+<td style="text-align: right;">0.4511454</td>
+<td style="text-align: right;">0.0196740</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BFP</td>
+<td style="text-align: right;">0.4636821</td>
+<td style="text-align: right;">0.0553198</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BL1</td>
+<td style="text-align: right;">0.4415901</td>
+<td style="text-align: right;">0.0302722</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BL2</td>
+<td style="text-align: right;">0.4013246</td>
+<td style="text-align: right;">0.0156818</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BL3</td>
+<td style="text-align: right;">0.4444647</td>
+<td style="text-align: right;">0.0404314</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BL4</td>
+<td style="text-align: right;">0.4291347</td>
+<td style="text-align: right;">0.0597346</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BLA</td>
+<td style="text-align: right;">0.4948384</td>
+<td style="text-align: right;">0.0327533</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BLN</td>
+<td style="text-align: right;">0.4494899</td>
+<td style="text-align: right;">0.0180792</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BLU</td>
+<td style="text-align: right;">0.3840402</td>
+<td style="text-align: right;">0.0405309</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BOS</td>
+<td style="text-align: right;">0.4019417</td>
+<td style="text-align: right;">0.0052279</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BR1</td>
+<td style="text-align: right;">0.4380546</td>
+<td style="text-align: right;">0.0436409</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BR2</td>
+<td style="text-align: right;">0.3999913</td>
+<td style="text-align: right;">0.0259926</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BR3</td>
+<td style="text-align: right;">0.4478143</td>
+<td style="text-align: right;">0.0220667</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BR4</td>
+<td style="text-align: right;">0.4389601</td>
+<td style="text-align: right;">0.0475385</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BRO</td>
+<td style="text-align: right;">0.4426533</td>
+<td style="text-align: right;">0.0100187</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BRP</td>
+<td style="text-align: right;">0.4340067</td>
+<td style="text-align: right;">0.0527725</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BS1</td>
+<td style="text-align: right;">0.4524744</td>
+<td style="text-align: right;">0.0326033</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BS2</td>
+<td style="text-align: right;">0.4333522</td>
+<td style="text-align: right;">0.0487843</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BSN</td>
+<td style="text-align: right;">0.4560588</td>
+<td style="text-align: right;">0.0091590</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BSP</td>
+<td style="text-align: right;">0.4312735</td>
+<td style="text-align: right;">0.0475409</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BSU</td>
+<td style="text-align: right;">0.4196739</td>
+<td style="text-align: right;">0.0570782</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CAL</td>
+<td style="text-align: right;">0.4163244</td>
+<td style="text-align: right;">0.0083684</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CH1</td>
+<td style="text-align: right;">0.4295987</td>
+<td style="text-align: right;">0.0630252</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CH2</td>
+<td style="text-align: right;">0.4381417</td>
+<td style="text-align: right;">0.0359333</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CHA</td>
+<td style="text-align: right;">0.4061497</td>
+<td style="text-align: right;">0.0055516</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CHN</td>
+<td style="text-align: right;">0.4151112</td>
+<td style="text-align: right;">0.0049086</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CHP</td>
+<td style="text-align: right;">0.4763870</td>
+<td style="text-align: right;">0.0513203</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CHU</td>
+<td style="text-align: right;">0.3431195</td>
+<td style="text-align: right;">0.0363453</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CIN</td>
+<td style="text-align: right;">0.4033202</td>
+<td style="text-align: right;">0.0048899</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CL1</td>
+<td style="text-align: right;">0.3845966</td>
+<td style="text-align: right;">0.0411279</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CL2</td>
+<td style="text-align: right;">0.4352382</td>
+<td style="text-align: right;">0.0227355</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CL3</td>
+<td style="text-align: right;">0.4592843</td>
+<td style="text-align: right;">0.0301693</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CL4</td>
+<td style="text-align: right;">0.4449912</td>
+<td style="text-align: right;">0.0162440</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CL5</td>
+<td style="text-align: right;">0.4396178</td>
+<td style="text-align: right;">0.0439309</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CL6</td>
+<td style="text-align: right;">0.4108050</td>
+<td style="text-align: right;">0.0283119</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CLE</td>
+<td style="text-align: right;">0.4006011</td>
+<td style="text-align: right;">0.0052483</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CLP</td>
+<td style="text-align: right;">0.4053915</td>
+<td style="text-align: right;">0.0426657</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CN1</td>
+<td style="text-align: right;">0.4408623</td>
+<td style="text-align: right;">0.0236475</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CN2</td>
+<td style="text-align: right;">0.4383911</td>
+<td style="text-align: right;">0.0209861</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CN3</td>
+<td style="text-align: right;">0.4356297</td>
+<td style="text-align: right;">0.0488203</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CNU</td>
+<td style="text-align: right;">0.4442438</td>
+<td style="text-align: right;">0.0524537</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">COL</td>
+<td style="text-align: right;">0.3894685</td>
+<td style="text-align: right;">0.0076393</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">DET</td>
+<td style="text-align: right;">0.4068709</td>
+<td style="text-align: right;">0.0049965</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">DTN</td>
+<td style="text-align: right;">0.4218753</td>
+<td style="text-align: right;">0.0167160</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ELI</td>
+<td style="text-align: right;">0.5265842</td>
+<td style="text-align: right;">0.0625246</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">FLO</td>
+<td style="text-align: right;">0.3704714</td>
+<td style="text-align: right;">0.0099976</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">FW1</td>
+<td style="text-align: right;">0.4400858</td>
+<td style="text-align: right;">0.0520187</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">HAR</td>
+<td style="text-align: right;">0.4180851</td>
+<td style="text-align: right;">0.0458073</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">HOU</td>
+<td style="text-align: right;">0.4014140</td>
+<td style="text-align: right;">0.0060234</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">HR1</td>
+<td style="text-align: right;">0.3834706</td>
+<td style="text-align: right;">0.0384117</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">IN1</td>
+<td style="text-align: right;">0.4081043</td>
+<td style="text-align: right;">0.0657034</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">IN2</td>
+<td style="text-align: right;">0.4626796</td>
+<td style="text-align: right;">0.0468755</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">IN3</td>
+<td style="text-align: right;">0.4194214</td>
+<td style="text-align: right;">0.0308209</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">KC1</td>
+<td style="text-align: right;">0.4076348</td>
+<td style="text-align: right;">0.0125515</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">KC2</td>
+<td style="text-align: right;">0.3811199</td>
+<td style="text-align: right;">0.0268566</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">KCA</td>
+<td style="text-align: right;">0.3908347</td>
+<td style="text-align: right;">0.0061088</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">KCN</td>
+<td style="text-align: right;">0.4401166</td>
+<td style="text-align: right;">0.0487441</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">KCU</td>
+<td style="text-align: right;">0.4177302</td>
+<td style="text-align: right;">0.0297558</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">KEO</td>
+<td style="text-align: right;">0.5121290</td>
+<td style="text-align: right;">0.1143606</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">LAA</td>
+<td style="text-align: right;">0.3760600</td>
+<td style="text-align: right;">0.0092270</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">LAN</td>
+<td style="text-align: right;">0.3951006</td>
+<td style="text-align: right;">0.0058580</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">LS1</td>
+<td style="text-align: right;">0.5301629</td>
+<td style="text-align: right;">0.0566394</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">LS2</td>
+<td style="text-align: right;">0.4729020</td>
+<td style="text-align: right;">0.0162837</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">LS3</td>
+<td style="text-align: right;">0.4891679</td>
+<td style="text-align: right;">0.0152867</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MIA</td>
+<td style="text-align: right;">0.3638393</td>
+<td style="text-align: right;">0.0116194</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MID</td>
+<td style="text-align: right;">0.4584261</td>
+<td style="text-align: right;">0.0620349</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MIL</td>
+<td style="text-align: right;">0.3591028</td>
+<td style="text-align: right;">0.0082949</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MIN</td>
+<td style="text-align: right;">0.3916705</td>
+<td style="text-align: right;">0.0057715</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ML1</td>
+<td style="text-align: right;">0.4412084</td>
+<td style="text-align: right;">0.0145368</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ML2</td>
+<td style="text-align: right;">0.4392629</td>
+<td style="text-align: right;">0.0552238</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ML3</td>
+<td style="text-align: right;">0.4639775</td>
+<td style="text-align: right;">0.0643091</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ML4</td>
+<td style="text-align: right;">0.4141714</td>
+<td style="text-align: right;">0.0089950</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MLA</td>
+<td style="text-align: right;">0.4186572</td>
+<td style="text-align: right;">0.0369813</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MLU</td>
+<td style="text-align: right;">0.5133325</td>
+<td style="text-align: right;">0.1238145</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MON</td>
+<td style="text-align: right;">0.4170258</td>
+<td style="text-align: right;">0.0084699</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NH1</td>
+<td style="text-align: right;">0.4411889</td>
+<td style="text-align: right;">0.0512634</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NY1</td>
+<td style="text-align: right;">0.4400869</td>
+<td style="text-align: right;">0.0089801</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NY2</td>
+<td style="text-align: right;">0.3902632</td>
+<td style="text-align: right;">0.0241349</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NY3</td>
+<td style="text-align: right;">0.3802316</td>
+<td style="text-align: right;">0.0412556</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NY4</td>
+<td style="text-align: right;">0.4421523</td>
+<td style="text-align: right;">0.0255565</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NYA</td>
+<td style="text-align: right;">0.4039777</td>
+<td style="text-align: right;">0.0052308</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NYN</td>
+<td style="text-align: right;">0.4024333</td>
+<td style="text-align: right;">0.0055566</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NYP</td>
+<td style="text-align: right;">0.4219724</td>
+<td style="text-align: right;">0.0490192</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">OAK</td>
+<td style="text-align: right;">0.4031833</td>
+<td style="text-align: right;">0.0069570</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PH1</td>
+<td style="text-align: right;">0.4531390</td>
+<td style="text-align: right;">0.0271964</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PH2</td>
+<td style="text-align: right;">0.4637561</td>
+<td style="text-align: right;">0.0325074</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PH3</td>
+<td style="text-align: right;">0.4662016</td>
+<td style="text-align: right;">0.0840147</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PH4</td>
+<td style="text-align: right;">0.4125432</td>
+<td style="text-align: right;">0.0154528</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PHA</td>
+<td style="text-align: right;">0.4653899</td>
+<td style="text-align: right;">0.0183585</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PHI</td>
+<td style="text-align: right;">0.4009546</td>
+<td style="text-align: right;">0.0047949</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PHN</td>
+<td style="text-align: right;">0.4514996</td>
+<td style="text-align: right;">0.0409308</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PHP</td>
+<td style="text-align: right;">0.4412618</td>
+<td style="text-align: right;">0.0565261</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PHU</td>
+<td style="text-align: right;">0.4805772</td>
+<td style="text-align: right;">0.0456076</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PIT</td>
+<td style="text-align: right;">0.4110421</td>
+<td style="text-align: right;">0.0047843</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PRO</td>
+<td style="text-align: right;">0.4648122</td>
+<td style="text-align: right;">0.0223946</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PT1</td>
+<td style="text-align: right;">0.4425914</td>
+<td style="text-align: right;">0.0228522</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PTP</td>
+<td style="text-align: right;">0.4496719</td>
+<td style="text-align: right;">0.0522881</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">RC1</td>
+<td style="text-align: right;">0.5740314</td>
+<td style="text-align: right;">0.0763574</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">RC2</td>
+<td style="text-align: right;">0.4754104</td>
+<td style="text-align: right;">0.0433339</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">RIC</td>
+<td style="text-align: right;">0.5089137</td>
+<td style="text-align: right;">0.0667460</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SDN</td>
+<td style="text-align: right;">0.3939556</td>
+<td style="text-align: right;">0.0061538</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SE1</td>
+<td style="text-align: right;">0.4176015</td>
+<td style="text-align: right;">0.0444109</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SEA</td>
+<td style="text-align: right;">0.3865966</td>
+<td style="text-align: right;">0.0067215</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SFN</td>
+<td style="text-align: right;">0.4015773</td>
+<td style="text-align: right;">0.0054593</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SL1</td>
+<td style="text-align: right;">0.3374071</td>
+<td style="text-align: right;">0.0668874</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SL2</td>
+<td style="text-align: right;">0.3923114</td>
+<td style="text-align: right;">0.0586158</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SL3</td>
+<td style="text-align: right;">0.3979724</td>
+<td style="text-align: right;">0.0406508</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SL4</td>
+<td style="text-align: right;">0.4362857</td>
+<td style="text-align: right;">0.0174576</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SL5</td>
+<td style="text-align: right;">0.3754091</td>
+<td style="text-align: right;">0.0292705</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SLA</td>
+<td style="text-align: right;">0.4657450</td>
+<td style="text-align: right;">0.0167379</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SLN</td>
+<td style="text-align: right;">0.4197815</td>
+<td style="text-align: right;">0.0051585</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SLU</td>
+<td style="text-align: right;">0.3921405</td>
+<td style="text-align: right;">0.0377103</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SPU</td>
+<td style="text-align: right;">0.4625422</td>
+<td style="text-align: right;">0.0887580</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SR1</td>
+<td style="text-align: right;">0.4648602</td>
+<td style="text-align: right;">0.0389495</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SR2</td>
+<td style="text-align: right;">0.4127012</td>
+<td style="text-align: right;">0.0390948</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">TBA</td>
+<td style="text-align: right;">0.3564751</td>
+<td style="text-align: right;">0.0080257</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">TEX</td>
+<td style="text-align: right;">0.3852728</td>
+<td style="text-align: right;">0.0060862</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">TL1</td>
+<td style="text-align: right;">0.4554015</td>
+<td style="text-align: right;">0.0497322</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">TL2</td>
+<td style="text-align: right;">0.4199668</td>
+<td style="text-align: right;">0.0612612</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">TOR</td>
+<td style="text-align: right;">0.3752141</td>
+<td style="text-align: right;">0.0067575</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">TRN</td>
+<td style="text-align: right;">0.4808805</td>
+<td style="text-align: right;">0.0294035</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">TRO</td>
+<td style="text-align: right;">0.4718956</td>
+<td style="text-align: right;">0.0411505</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">WAS</td>
+<td style="text-align: right;">0.3740593</td>
+<td style="text-align: right;">0.0081559</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">WIL</td>
+<td style="text-align: right;">0.3818743</td>
+<td style="text-align: right;">0.0593996</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">WOR</td>
+<td style="text-align: right;">0.4245581</td>
+<td style="text-align: right;">0.0345626</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">WS1</td>
+<td style="text-align: right;">0.4635646</td>
+<td style="text-align: right;">0.0122113</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">WS2</td>
+<td style="text-align: right;">0.3989311</td>
+<td style="text-align: right;">0.0127670</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">WS3</td>
+<td style="text-align: right;">0.4101920</td>
+<td style="text-align: right;">0.0461601</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">WS4</td>
+<td style="text-align: right;">0.4651933</td>
+<td style="text-align: right;">0.0578889</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">WS5</td>
+<td style="text-align: right;">0.4083095</td>
+<td style="text-align: right;">0.0500333</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">WS6</td>
+<td style="text-align: right;">0.4159025</td>
+<td style="text-align: right;">0.0582115</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">WS7</td>
+<td style="text-align: right;">0.4496808</td>
+<td style="text-align: right;">0.0487791</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">WS8</td>
+<td style="text-align: right;">0.4471758</td>
+<td style="text-align: right;">0.0217252</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">WS9</td>
+<td style="text-align: right;">0.4393495</td>
+<td style="text-align: right;">0.0361728</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">WSU</td>
+<td style="text-align: right;">0.4006772</td>
+<td style="text-align: right;">0.0343978</td>
+</tr>
+</tbody>
+</table>
+
+
 </div>
 </div>
 </section>
@@ -346,53 +3012,191 @@ Attaching package: 'dplyr'</code></pre>
 <section id="b" class="level2">
 <h2 class="anchored" data-anchor-id="b">b</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add method columns to each table</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>table_no_parallel <span class="ot">&lt;-</span> table <span class="sc">%&gt;%</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">method =</span> <span class="st">"No Parallel"</span>)</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>table_parallel <span class="ot">&lt;-</span> table_parallel <span class="sc">%&gt;%</span></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">method =</span> <span class="st">"Parallel"</span>)</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>table_future <span class="ot">&lt;-</span> table_future <span class="sc">%&gt;%</span></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">method =</span> <span class="st">"Future"</span>)</span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine all tables</span></span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>combined_table <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(table_no_parallel, table_parallel, table_future)</span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Select the top 10 teams by avg_rf across all sources</span></span>
-<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>top_teams <span class="ot">&lt;-</span> combined_table <span class="sc">%&gt;%</span></span>
-<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(avg_rf)) <span class="sc">%&gt;%</span></span>
-<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(method) <span class="sc">%&gt;%</span></span>
-<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
-<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Reshape data to wide format</span></span>
-<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>wide_table <span class="ot">&lt;-</span> top_teams <span class="sc">%&gt;%</span></span>
-<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
-<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">id_cols =</span> teamID,</span>
-<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> method,</span>
-<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> <span class="fu">c</span>(avg_rf, sd_rf),</span>
-<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_sep =</span> <span class="st">" "</span></span>
-<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a>wide_table</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 10 × 7
-   teamID `avg_rf Future` `avg_rf No Parallel` `avg_rf Parallel` `sd_rf Future`
-   &lt;chr&gt;            &lt;dbl&gt;                &lt;dbl&gt;             &lt;dbl&gt;          &lt;dbl&gt;
- 1 RC1              0.574                0.574             0.574         0.0804
- 2 LS1              0.530                0.530             0.530         0.0562
- 3 ELI              0.527                0.527             0.527         0.0645
- 4 MLU              0.513                0.513             0.513         0.130 
- 5 KEO              0.512                0.512             0.512         0.111 
- 6 RIC              0.509                0.509             0.509         0.0660
- 7 BLA              0.495                0.495             0.495         0.0307
- 8 LS3              0.489                0.489             0.489         0.0156
- 9 TRN              0.481                0.481             0.481         0.0301
-10 PHU              0.481                0.481             0.481         0.0451
-# ℹ 2 more variables: `sd_rf No Parallel` &lt;dbl&gt;, `sd_rf Parallel` &lt;dbl&gt;</code></pre>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add method columns to each table</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>table_no_parallel <span class="ot">&lt;-</span> table <span class="sc">%&gt;%</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">method =</span> <span class="st">"No Parallel"</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>table_parallel <span class="ot">&lt;-</span> table_parallel <span class="sc">%&gt;%</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">method =</span> <span class="st">"Parallel"</span>)</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>table_future <span class="ot">&lt;-</span> table_future <span class="sc">%&gt;%</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">method =</span> <span class="st">"Future"</span>)</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine all tables</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>combined_table <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(table_no_parallel, table_parallel, table_future)</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Select the top 10 teams by avg_rf across all sources</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>top_teams <span class="ot">&lt;-</span> combined_table <span class="sc">%&gt;%</span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(avg_rf)) <span class="sc">%&gt;%</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(method) <span class="sc">%&gt;%</span></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Reshape data to wide format</span></span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>wide_table <span class="ot">&lt;-</span> top_teams <span class="sc">%&gt;%</span></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">id_cols =</span> teamID,</span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> method,</span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> <span class="fu">c</span>(avg_rf, sd_rf),</span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_sep =</span> <span class="st">" "</span></span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Render the tibble as an HTML table</span></span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(wide_table, <span class="at">format =</span> <span class="st">"html"</span>, <span class="at">table.attr =</span> <span class="st">"style='width:100%;'"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">teamID</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">avg_rf Future</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">avg_rf No Parallel</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">avg_rf Parallel</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">sd_rf Future</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">sd_rf No Parallel</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">sd_rf Parallel</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">RC1</td>
+<td style="text-align: right;">0.5740314</td>
+<td style="text-align: right;">0.5740314</td>
+<td style="text-align: right;">0.5740314</td>
+<td style="text-align: right;">0.0763574</td>
+<td style="text-align: right;">0.0799952</td>
+<td style="text-align: right;">0.0809002</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">LS1</td>
+<td style="text-align: right;">0.5301629</td>
+<td style="text-align: right;">0.5301629</td>
+<td style="text-align: right;">0.5301629</td>
+<td style="text-align: right;">0.0566394</td>
+<td style="text-align: right;">0.0555665</td>
+<td style="text-align: right;">0.0546134</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ELI</td>
+<td style="text-align: right;">0.5265842</td>
+<td style="text-align: right;">0.5265842</td>
+<td style="text-align: right;">0.5265842</td>
+<td style="text-align: right;">0.0625246</td>
+<td style="text-align: right;">0.0649465</td>
+<td style="text-align: right;">0.0632898</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MLU</td>
+<td style="text-align: right;">0.5133325</td>
+<td style="text-align: right;">0.5133325</td>
+<td style="text-align: right;">0.5133325</td>
+<td style="text-align: right;">0.1238145</td>
+<td style="text-align: right;">0.1263917</td>
+<td style="text-align: right;">0.1297942</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">KEO</td>
+<td style="text-align: right;">0.5121290</td>
+<td style="text-align: right;">0.5121290</td>
+<td style="text-align: right;">0.5121290</td>
+<td style="text-align: right;">0.1143606</td>
+<td style="text-align: right;">0.1110072</td>
+<td style="text-align: right;">0.1124204</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">RIC</td>
+<td style="text-align: right;">0.5089137</td>
+<td style="text-align: right;">0.5089137</td>
+<td style="text-align: right;">0.5089137</td>
+<td style="text-align: right;">0.0667460</td>
+<td style="text-align: right;">0.0683018</td>
+<td style="text-align: right;">0.0673524</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BLA</td>
+<td style="text-align: right;">0.4948384</td>
+<td style="text-align: right;">0.4948384</td>
+<td style="text-align: right;">0.4948384</td>
+<td style="text-align: right;">0.0327533</td>
+<td style="text-align: right;">0.0316123</td>
+<td style="text-align: right;">0.0313176</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">LS3</td>
+<td style="text-align: right;">0.4891679</td>
+<td style="text-align: right;">0.4891679</td>
+<td style="text-align: right;">0.4891679</td>
+<td style="text-align: right;">0.0152867</td>
+<td style="text-align: right;">0.0154255</td>
+<td style="text-align: right;">0.0157245</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">TRN</td>
+<td style="text-align: right;">0.4808805</td>
+<td style="text-align: right;">0.4808805</td>
+<td style="text-align: right;">0.4808805</td>
+<td style="text-align: right;">0.0294035</td>
+<td style="text-align: right;">0.0293664</td>
+<td style="text-align: right;">0.0324159</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PHU</td>
+<td style="text-align: right;">0.4805772</td>
+<td style="text-align: right;">0.4805772</td>
+<td style="text-align: right;">0.4805772</td>
+<td style="text-align: right;">0.0456076</td>
+<td style="text-align: right;">0.0464772</td>
+<td style="text-align: right;">0.0455645</td>
+</tr>
+</tbody>
+</table>
+
+
 </div>
 </div>
+</section>
+<section id="c" class="level2">
+<h2 class="anchored" data-anchor-id="c">c</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find timings for each method</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>duration_no_parallel <span class="ot">&lt;-</span> end_no_parallel <span class="sc">-</span> start_no_parallel</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>duration_parallel <span class="ot">&lt;-</span> end_parallel <span class="sc">-</span> start_parallel</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>duration_futures <span class="ot">&lt;-</span> end_future <span class="sc">-</span> start_future</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Put all times into a table</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>timings <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">Method =</span> <span class="fu">c</span>(<span class="st">"No Parallel"</span>, <span class="st">"Parallel"</span>, <span class="st">"Futures"</span>),</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">Duration =</span> <span class="fu">c</span>(duration_no_parallel, duration_parallel, duration_futures)</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Render the tibble as an HTML table</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(timings, <span class="at">format =</span> <span class="st">"html"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Method</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Duration</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">No Parallel</td>
+<td style="text-align: left;">82.79560 secs</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Parallel</td>
+<td style="text-align: left;">20.05727 secs</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Futures</td>
+<td style="text-align: left;">19.82947 secs</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<p>Based on the timings for each method, we can see that stratified bootstrapping with no parallel processing was the slowest method by far, and parallel processing using the parallel and future packages were much faster by more than three times, with both times being pretty similar. All three methods produced very similar standard errors for all teams so there is little performance difference between them - they produce the same results but using parallelization in the two methods significantly reduces evaluation time.</p>
 </section>
 </section>
 
