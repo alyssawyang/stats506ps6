@@ -15,6 +15,10 @@ library(RSQLite)
 library(dplyr)
 library(parallel)
 library(future)
+library(furrr)
+library(tidyr)
+library(gt)
+library(kableExtra)
 
 # Connect to database
 lahman <- dbConnect(SQLite(), "lahman_1871-2022.sqlite")
@@ -101,7 +105,9 @@ boot_iter <- function(data) {
       sample_frac(replace = TRUE) %>% 
       summarise(avg_rf = mean(rf, na.rm = TRUE))
 }
+```
 
+```{r}
 #' Bootstrap using parallel processing
 #'
 #' @param data: data table to work on
@@ -133,16 +139,63 @@ parallel_sd <- boot_results %>%
   summarise(sd_rf = sd(avg_rf, na.rm = TRUE))
 
 # Combine average and SD into a table
-table <- avg_rf_team %>% 
+table_parallel <- avg_rf_team %>% 
   left_join(parallel_sd, by = "teamID")
 
-table
+table_parallel
 ```
 
 ### 3: Futures
 ```{r}
 plan(multisession)
+
+boot_results <- future_map_dfr(1:1000, ~ boot_iter(fielding), .options = furrr_options(seed = TRUE))
+
+future_sd <- boot_results %>%
+  group_by(teamID) %>%
+  summarise(sd_rf = sd(avg_rf, na.rm = TRUE))
+
+table_future <- avg_rf_team %>%
+  left_join(future_sd, by = "teamID")
+
+table_future
 ```
+
+
+## b
+```{r}
+# Add method columns to each table
+table_no_parallel <- table %>%
+  mutate(method = "No Parallel")
+
+table_parallel <- table_parallel %>%
+  mutate(method = "Parallel")
+
+table_future <- table_future %>%
+  mutate(method = "Future")
+
+# Combine all tables
+combined_table <- bind_rows(table_no_parallel, table_parallel, table_future)
+
+# Select the top 10 teams by avg_rf across all sources
+top_teams <- combined_table %>%
+  arrange(desc(avg_rf)) %>%
+  group_by(method) %>%
+  slice_head(n = 10) %>%
+  ungroup()
+
+# Reshape data to wide format
+wide_table <- top_teams %>%
+  pivot_wider(
+    id_cols = teamID,
+    names_from = method,
+    values_from = c(avg_rf, sd_rf),
+    names_sep = " "
+  )
+
+wide_table
+```
+
 
 
 
